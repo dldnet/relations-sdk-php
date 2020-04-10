@@ -12,5 +12,11 @@
       "name": "David Luyten",
       "email": "david@dldnet.com"
     }
-  ]
+  ],
+  "autoload": {
+    "psr-4": {
+      "Relations\\": "src/relations/"
+    }
+  },
+  "require": {}
 }
