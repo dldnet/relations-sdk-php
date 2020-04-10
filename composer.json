@@ -1,5 +1,5 @@
 {
-  "name": "dldnet/relations/sdk-php",
+  "name": "dldnet/relations-sdk-php",
   "description": "PHP SDK to create a custom module for Relations",
   "keywords": [
     "crm"
@@ -12,11 +12,5 @@
       "name": "David Luyten",
       "email": "david@dldnet.com"
     }
-  ],
-  "autoload": {
-    "psr-4": {
-      "Relations\\": "src/relations/"
-    }
-  },
-  "require": {}
+  ]
 }
