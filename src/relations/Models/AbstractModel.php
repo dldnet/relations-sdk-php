@@ -22,10 +22,11 @@ class AbstractModel
         $data = static::sendRequest($url);
 
         $result = [];
-        foreach ($data as $item) {
-            $result[] = static::hydrate($item);
+        if ($data) {
+            foreach ($data as $item) {
+                $result[] = static::hydrate($item);
+            }
         }
-
         return $result;
     }
 
@@ -141,12 +142,15 @@ class AbstractModel
         foreach ($item as $key => $value) {
             $entity->$key = $value;
         }
-
         return $entity;
     }
 
     protected static function sendRequest($url, $data = false, $type = 'GET', $raw = false)
     {
+
+        // debug
+        //$raw = true;
+
         $data = json_encode($data);
         $curl = curl_init();
 
@@ -176,17 +180,24 @@ class AbstractModel
         ];
 
         curl_setopt_array($curl, $opts);
+
         $response = curl_exec($curl);
 
-        if ($raw) {
-            return $response;
-        } else {
-            $json = json_decode($response);
-            if ($json && property_exists($json, 'data')) {
-                return $json->data;
+        if ($response) {
+            if ($raw) {
+                return $response;
             } else {
-                throw new Exception($response);
+                $json = json_decode($response);
+                if ($json) {
+                    return $json;
+                } else {
+                    throw new Exception($response);
+                }
             }
+        } else {
+            $response = 'Erreur Curl : ' . curl_error($curl);
+            throw new Exception($response);
+            return '';
         }
     }
 }
